@@ -10,6 +10,7 @@ export class BurgersController extends BaseController{
             .get('/burgers', this.getBurgers)
             .get('/burgers/:id', this.getBurgerById)
             .post('/burgers', this.createIngrediant)
+            .put('/burgers/:id', this.updateIngrediant)
     }
 
     getBurgers(req, res, next) {
@@ -44,6 +45,19 @@ export class BurgersController extends BaseController{
             res.send(newIngrediant)
         } catch (error) {
             next()
+        }
+    }
+
+    updateIngrediant(req, res, next) {
+        try {
+            let ingrediantData = req.body
+            let ingrediant = req.params.id
+
+            let updateIngrediant = burgersService.updateIngrediant(ingrediant, ingrediantData)
+
+            res.send(updateIngrediant)
+        } catch (error) {
+            next(error)
         }
     }
 }
